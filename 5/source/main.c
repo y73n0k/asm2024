@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     clock_t begin = clock();
     flip(img, width, height, channels);
     clock_t end = clock();
-    printf("time: %lf\n", (double)(end - begin) / CLOCKS_PER_SEC);
+    printf("%lf\n", (double)(end - begin) / CLOCKS_PER_SEC);
 
     if (!stbi_write_png(argv[2], width, height, channels, img, width * channels)) {
         printf("Error while writing to file %s", argv[2]);
