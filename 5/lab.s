@@ -7,7 +7,9 @@ global flip
 flip:
     ; flip(char *buffer, int width, int height, int channels)
     ;           edi          esi        edx         ecx
-    push    rbp
+    push    rbx
+    push    r14
+    push    r15
 
     mov     r8, rdx     ; r8d - height
     mov     r9, rcx     ; r9d - channels
@@ -39,9 +41,10 @@ flip:
             mov     rcx, r9
             .channel_loop:
 
-                mov     al, byte [rdi + r10]
-                xchg    al, byte [rdi + r11]
-                xchg    al, byte [rdi + r10]
+                mov     r14b, byte [rdi + r10]
+                mov     r15b, byte [rdi + r11]
+                mov     byte [rdi + r10], r15b
+                mov     byte [rdi + r11], r14b
 
                 inc     r10
                 inc     r11
@@ -54,5 +57,7 @@ flip:
         pop     rcx
         loop    .height_loop
 
+    pop     r15
+    pop     r14
     pop     rbx
     ret
