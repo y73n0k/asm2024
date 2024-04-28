@@ -7,11 +7,11 @@ msg1:
 msg2:
 	db	"%f", 0
 msg3:
-	db	"atan(%f)=%f", 10, 0
+	db	"atan(%.10f) = %.10f", 10, 0
 msg4:
-	db	"myatan(%f)=%f", 10, 0
+	db	"myatan(%.10f)=%.10f", 10, 0
 string:
-    db	"%f", 10, 0
+    db	"%.10f", 10, 0
 file_name:
     db  "result", 0
 mode:
@@ -108,7 +108,6 @@ main:
 
 	mov         rdi, msg2
 	lea         rsi, [rbp-8]
-	mov         rax, rax
 	call	    scanf
 
 	movss	    xmm0, [rbp-8]
@@ -158,6 +157,8 @@ main:
     jmp         .return
 
 .too_big:
+    mov         rdi, [rbp-32]
+    call        fclose
     mov         rax, 1
 
 .return:
